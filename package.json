@@ -1,0 +1,65 @@
+{
+  "name": "@ulu/sanity-database-runner",
+  "version": "1.0.0",
+  "description": "A CLI tool to run scripts for backing up and migrating a Sanity.io database.",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "bin": {
+    "sanity-db-run": "bin/cli.js"
+  },
+  "files": [
+    "lib",
+    "bin",
+    "types",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "types": "./types/index.d.ts"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "types": "npx tsc",
+    "docs": "node_modules/.bin/jsdoc -c jsdoc.json",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "sanity",
+    "database",
+    "migration",
+    "runner",
+    "cli"
+  ],
+  "author": "Joe Scherben",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jscherbe/sanity-database-runner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jscherbe/sanity-database-runner/issues"
+  },
+  "homepage": "https://github.com/Jscherbe/sanity-database-runner#readme",
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "prompts": "^2.4.2",
+    "which": "^6.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "docdash": "^2.0.2",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.7.0",
+    "globals": "^15.8.0",
+    "jsdoc": "^4.0.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.13"
+  },
+  "peerDependencies": {
+    "@sanity/client": ">=6"
+  }
+}
