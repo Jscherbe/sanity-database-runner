@@ -22,7 +22,7 @@
   },
   "type": "module",
   "scripts": {
-    "test": "vitest",
+    "test": "node tests/01-happy-path.js && node tests/02-error-handling.js",
     "types": "npx tsc",
     "docs": "node_modules/.bin/jsdoc -c jsdoc.json",
     "lint": "eslint ."
@@ -56,8 +56,7 @@
     "eslint": "^9.7.0",
     "globals": "^15.8.0",
     "jsdoc": "^4.0.2",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.13"
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "@sanity/client": ">=6"

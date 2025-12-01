@@ -9,7 +9,8 @@ This utility provides a structured way to execute database update scripts agains
 
 ## Features
 
--   **CLI Interface:** Run scripts from the command line with a simple command: `npx sanity-db-run <script-name>`.
+-   **CLI Interface:** Run scripts explicitly by name or select from a list.
+-   **Interactive Mode:** Don't remember the script name? Run the command without arguments to pick from a list of available scripts.
 -   **Automatic Backups:** Automatically creates a `.tar.gz` backup of your dataset before running any script.
 -   **Configurable:** All paths and the Sanity client are configured in your project, not in the tool.
 -   **Transactional Updates:** Mutations returned from your scripts are run inside a single transaction for safety.
@@ -31,21 +32,27 @@ In the root of your project, create a file named `sanity-runner.config.js`. This
 // sanity-runner.config.js
 import { createClient } from '@sanity/client';
 
-// Your project-specific configuration
-const clientConfig = {
-  projectId: 'your-project-id',
-  dataset: 'your-dataset',
-  token: process.env.SANITY_WRITE_TOKEN, // Make sure this is a write token
-  apiVersion: '2024-05-01',
-  useCdn: false,
-};
-
 export const config = {
+  // The dataset is required for backups and logging.
+  dataset: 'production',
+
   // You can pass a pre-initialized client...
-  client: createClient(clientConfig),
+  client: createClient({
+    projectId: 'your-project-id',
+    dataset: 'production', // Should match the dataset above
+    token: process.env.SANITY_WRITE_TOKEN,
+    apiVersion: '2024-05-01',
+    useCdn: false
+  }),
   
-  // ...or just the config object
-  // client: clientConfig,
+  // ...or just the config object for the client.
+  // The runner will create the client for you.
+  // client: {
+  //   projectId: 'your-project-id',
+  //   token: process.env.SANITY_WRITE_TOKEN,
+  //   apiVersion: '2024-05-01',
+  //   useCdn: false
+  // },
 
   // Paths are relative to your project root
   paths: {
@@ -76,15 +83,25 @@ Based on the config above, create the `database/updates` directory. This is wher
 
 ## Usage
 
-### Running a Script
+You can run the tool in two ways:
 
-To run an update script, execute the `sanity-db-run` command from your project root, followed by the name of your script file (without the `.js` extension).
+### 1. Explicit Mode (For Automation)
+
+Provide the name of your script file (without the `.js` extension) as a command-line argument. This is fast and ideal for use in other scripts or CI/CD pipelines.
 
 ```bash
 npx sanity-db-run my-first-update
 ```
 
-The runner will prompt you for confirmation before executing the script and creating a backup.
+### 2. Interactive Mode (For Convenience)
+
+Run the command without any arguments. The tool will scan your `updates` directory and present you with a list of available scripts to choose from.
+
+```bash
+npx sanity-db-run
+```
+
+The runner will then prompt you for confirmation before executing the selected script and creating a backup.
 
 ### Creating an Update Script
 
