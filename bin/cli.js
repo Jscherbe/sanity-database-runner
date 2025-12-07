@@ -21,8 +21,6 @@ async function main() {
 
   try {
     const { config } = await import(configPath);
-    
-    console.log("config:\n", config);
 
     if (!config || !config.client) {
       log.error('Error: The configuration file must export a "config" object with a "client" property.');

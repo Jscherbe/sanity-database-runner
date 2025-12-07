@@ -90,7 +90,7 @@ You can run the tool in two ways:
 Provide the name of your script file (without the `.js` extension) as a command-line argument. This is fast and ideal for use in other scripts or CI/CD pipelines.
 
 ```bash
-npx sanity-db-run my-first-update
+npx sanity-runner my-first-update
 ```
 
 ### 2. Interactive Mode (For Convenience)
@@ -98,7 +98,7 @@ npx sanity-db-run my-first-update
 Run the command without any arguments. The tool will scan your `updates` directory and present you with a list of available scripts to choose from.
 
 ```bash
-npx sanity-db-run
+npx sanity-runner
 ```
 
 The runner will then prompt you for confirmation before executing the selected script and creating a backup.

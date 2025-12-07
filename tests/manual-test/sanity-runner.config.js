@@ -18,6 +18,7 @@ export const config = {
     useCdn: false,
   },
   paths: {
+    cwd: __dirname,
     updates: path.resolve(__dirname, "updates"),
     backups: path.resolve(__dirname, ".backups"),
   },

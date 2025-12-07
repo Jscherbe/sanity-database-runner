@@ -69,7 +69,7 @@ npm install -g yalc
 
 5.  **Run the CLI**: Now you can run the tool's CLI command directly. It will use the `sanity-runner.config.js` in this directory and will be fully interactive.
     ```bash
-    npx sanity-db-run manual-update
+    npx sanity-runner manual-update
     ```
     You will be prompted to confirm the action. After you confirm, you can inspect the database and the `tests/manual-test/.backups` directory to see the results.
 
