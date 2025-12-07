@@ -3,6 +3,9 @@ import path from "path";
 import dotenv from "dotenv";
 import { createClient } from "@sanity/client";
 import { createDatabaseRunner } from "../lib/index.js";
+import { getUrlDirname } from "@ulu/utils/node/path.js";
+
+const __dirname = getUrlDirname(import.meta.url);
 
 console.log("--- Starting Test: 02-error-handling.js ---");
 

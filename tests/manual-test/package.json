@@ -13,6 +13,7 @@
     "@ulu/sanity-database-runner": "file:.yalc/@ulu/sanity-database-runner"
   },
   "devDependencies": {
+    "@sanity/cli": "^4.20.3",
     "dotenv": "^17.2.3"
   }
 }

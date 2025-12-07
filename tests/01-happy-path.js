@@ -4,6 +4,9 @@ import fs from "fs-extra";
 import dotenv from "dotenv";
 import { createClient } from "@sanity/client";
 import { createDatabaseRunner } from "../lib/index.js";
+import { getUrlDirname } from "@ulu/utils/node/path.js";
+
+const __dirname = getUrlDirname(import.meta.url);
 
 // --- Setup ---
 console.log("--- Starting Test: 01-happy-path.js ---");

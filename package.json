@@ -50,6 +50,7 @@
     "which": "^6.0.0"
   },
   "devDependencies": {
+    "@ulu/utils": "^0.0.34",
     "@eslint/js": "^9.7.0",
     "docdash": "^2.0.2",
     "dotenv": "^17.2.3",
