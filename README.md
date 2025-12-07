@@ -1,6 +1,6 @@
-# `@ulu/sanity-database-runner`
+# `@ulu/sanity-runner`
 
-[![npm version](https://img.shields.io/npm/v/@ulu/sanity-database-runner.svg)](https://www.npmjs.com/package/@ulu/sanity-database-runner)
+[![npm version](https://img.shields.io/npm/v/@ulu/sanity-runner.svg)](https://www.npmjs.com/package/@ulu/sanity-runner)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A CLI tool to run scripts for backing up and migrating a Sanity.io database.
@@ -19,7 +19,7 @@ This utility provides a structured way to execute database update scripts agains
 ## Installation
 
 ```bash
-npm install -D @ulu/sanity-database-runner @sanity/client
+npm install -D @ulu/sanity-runner @sanity/client
 ```
 
 ## Setup

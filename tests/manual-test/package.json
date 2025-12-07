@@ -1,7 +1,7 @@
 {
   "name": "manual-test",
   "version": "1.0.0",
-  "description": "A test project for @ulu/sanity-database-runner",
+  "description": "A test project for @ulu/sanity-runner",
   "main": "index.js",
   "type": "module",
   "scripts": {},
@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@sanity/client": ">=6",
-    "@ulu/sanity-database-runner": "file:.yalc/@ulu/sanity-database-runner"
+    "@ulu/sanity-runner": "file:.yalc/@ulu/sanity-runner"
   },
   "devDependencies": {
     "@sanity/cli": "^4.20.3",

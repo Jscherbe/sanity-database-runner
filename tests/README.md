@@ -1,4 +1,4 @@
-# Testing `@ulu/sanity-database-runner`
+# Testing `@ulu/sanity-runner`
 
 This directory contains simple, executable Node.js scripts for testing the database runner against a real Sanity.io dataset.
 
@@ -20,6 +20,17 @@ This directory contains simple, executable Node.js scripts for testing the datab
     npm test
     ```
 
+## Important Note on Test Order and Data Cleanup
+
+The automated tests (`npm test`) are designed to be self-contained and **will delete all `post` and `author` documents** from your test dataset at the beginning and end of their execution.
+
+Because of this cleanup process, if you wish to manually inspect the results of the `manual-test` script in your Sanity Studio, you should run the tests in the following order:
+
+1.  **Run `npm test` first** to ensure everything is working and the database is clean.
+2.  **Run the manual test last** (e.g., `npx sanity-runner manual-update`).
+
+This ensures the documents created by the manual test are not immediately deleted by the automated suite, allowing you to verify them in the Studio.
+
 ## Test Scripts
 
 ### Automated Tests (`npm test`)
@@ -38,7 +49,7 @@ The `npm test` command executes the following scripts in sequence:
 
 ### Manual CLI Test
 
-This test provides a way to manually validate the full, real-world CLI experience, including interactive prompts. It uses `yalc` to simulate installing `@ulu/sanity-database-runner` in a separate project.
+This test provides a way to manually validate the full, real-world CLI experience, including interactive prompts. It uses `yalc` to simulate installing `@ulu/sanity-runner` in a separate project.
 
 **Prerequisite**: Install `yalc` globally if you haven't already.
 ```bash
@@ -59,7 +70,7 @@ npm install -g yalc
 
 3.  **Link the Package**: Add the package from your `yalc` store.
     ```bash
-    yalc add @ulu/sanity-database-runner
+    yalc add @ulu/sanity-runner
     ```
 
 4.  **Install Dependencies**:

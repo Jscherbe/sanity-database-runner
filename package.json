@@ -1,5 +1,5 @@
 {
-  "name": "@ulu/sanity-database-runner",
+  "name": "@ulu/sanity-runner",
   "version": "1.0.0",
   "description": "A CLI tool to run scripts for backing up and migrating a Sanity.io database.",
   "main": "lib/index.js",
