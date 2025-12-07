@@ -1,4 +1,4 @@
 Todos:
-  ✔ Need to figure out the workaround for the common js issue with sanity backups @done
-    * Think I worked around this by using .cjs extension and writing modules as common js
-    * Look back at database runner in projects to see how it was worked around
+  ☐ Consider updating github repo name
+  ☐ Fix linting errors
+    * All are minor and need to setup environments correctly
