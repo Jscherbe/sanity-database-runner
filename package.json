@@ -1,7 +1,7 @@
 {
   "name": "@ulu/sanity-runner",
-  "version": "1.0.0",
-  "description": "A CLI tool to run scripts for backing up and migrating a Sanity.io database.",
+  "version": "1.1.0",
+  "description": "A CLI tool for running database update scripts against a Sanity.io dataset.",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "bin": {
@@ -30,9 +30,13 @@
   "keywords": [
     "sanity",
     "database",
-    "migration",
+    "update",
+    "scripts",
     "runner",
-    "cli"
+    "cli",
+    "automation",
+    "batch",
+    "data"
   ],
   "author": "Joe Scherben",
   "license": "MIT",

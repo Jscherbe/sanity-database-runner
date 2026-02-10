@@ -3,15 +3,17 @@
 [![npm version](https://img.shields.io/npm/v/@ulu/sanity-runner.svg)](https://www.npmjs.com/package/@ulu/sanity-runner)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A CLI tool to run scripts for backing up and migrating a Sanity.io database.
+A CLI tool for running database update scripts against a Sanity.io dataset.
 
-This utility provides a structured way to execute database update scripts against your Sanity dataset, with automatic backups and a clear, repeatable process.
+This utility provides a safe and structured way to run database update scripts—small, version-controlled files that perform bulk data changes on your Sanity.io dataset. For example, you might need to add a new field to hundreds of documents at once, or rename a field across your entire dataset. ([Why Use an Update Script?](#why-use-an-update-script))
+
+As a safety measure, the runner automatically creates a backup before any changes are made.
 
 ## Features
 
 -   **CLI Interface:** Run scripts explicitly by name or select from a list.
 -   **Interactive Mode:** Don't remember the script name? Run the command without arguments to pick from a list of available scripts.
--   **Automatic Backups:** Automatically creates a `.tar.gz` backup of your dataset before running any script.
+-   **Automatic Safety Backups:** Creates a `.tar.gz` backup of your dataset before each run, so you can always restore if something goes wrong.
 -   **Configurable:** All paths and the Sanity client are configured in your project, not in the tool.
 -   **Transactional Updates:** Mutations returned from your scripts are run inside a single transaction for safety.
 -   **Dry Run Support:** (Coming Soon)
@@ -28,6 +30,8 @@ npm install -D @ulu/sanity-runner @sanity/client
 
 In the root of your project, create a file named `sanity-runner.config.js`. This file will configure the database runner.
 
+A minimal configuration only requires the `dataset` and a Sanity `client` instance:
+
 ```javascript
 // sanity-runner.config.js
 import { createClient } from '@sanity/client';
@@ -36,36 +40,56 @@ export const config = {
   // The dataset is required for backups and logging.
   dataset: 'production',
 
-  // You can pass a pre-initialized client...
+  // You must provide an initialized client.
   client: createClient({
     projectId: 'your-project-id',
     dataset: 'production', // Should match the dataset above
     token: process.env.SANITY_WRITE_TOKEN,
     apiVersion: '2024-05-01',
     useCdn: false
-  }),
-  
-  // ...or just the config object for the client.
-  // The runner will create the client for you.
-  // client: {
-  //   projectId: 'your-project-id',
-  //   token: process.env.SANITY_WRITE_TOKEN,
-  //   apiVersion: '2024-05-01',
-  //   useCdn: false
-  // },
+  })
+};
+```
 
-  // Paths are relative to your project root
+#### Path Configuration
+
+By default, the runner will look for scripts in `database/updates` and save backups to `database/backups`. You can override these and other path-related settings using the `paths` object.
+
+```javascript
+// sanity-runner.config.js
+import { createClient } from '@sanity/client';
+
+export const config = {
+  dataset: 'production',
+  client: createClient({ /* ... */ }),
+
+  // The `paths` object is optional.
   paths: {
-    updates: './database/updates', // Directory where your update scripts live
-    backups: './database/backups', // Directory where backups will be stored
-    // (Optional) Provide a specific path to the sanity binary if auto-detection fails
-    // sanityBin: '/path/to/your/sanity' 
+    // Optional: Define the project root. Defaults to `process.cwd()`.
+    // All other paths are resolved relative to this.
+    cwd: process.cwd(), 
+    
+    // Optional: Directory for your update scripts.
+    // Defaults to 'database/updates'.
+    updates: './db/my-updates',
+
+    // Optional: Directory for your backup files.
+    // Defaults to 'database/backups'.
+    backups: './db/my-backups',
+
+    // Optional: Provide a specific path to the sanity binary 
+    // if auto-detection fails.
+    sanityBin: '/path/to/your/sanity' 
   },
   
-  // (Optional) Disable backups for a specific run
+  // (Optional) Disable backups for a specific run.
   // backup: false
 };
 ```
+
+**Note on Path Resolution:**
+- **Relative paths** (like `'./db/my-updates'`) are resolved relative to `paths.cwd`.
+- **Absolute paths** (like `'/opt/sanity/backups'`) are used as-is, ignoring `paths.cwd`. This allows you to store scripts or backups anywhere on your filesystem.
 
 ### 2. Create your Update Scripts Directory
 
@@ -102,6 +126,16 @@ npx sanity-runner
 ```
 
 The runner will then prompt you for confirmation before executing the selected script and creating a backup.
+
+### Why Use an Update Script?
+
+As your project grows, you'll often need to make changes to your data structure. For example, you might:
+
+-   **Add a new field:** You've added a `category` field to your `post` documents and want to set a default value for all existing posts.
+-   **Rename a field:** You've decided to rename a field from `authorName` to `author` and need to copy the data over for all documents.
+-   **Restructure content:** You want to move content from a simple `string` field into a `block` (rich text) field.
+
+Doing these kinds of changes manually across hundreds of documents is tedious and prone to errors. An update script automates this process. You define the logic for the change in a single file, and this tool runs it securely against your entire dataset.
 
 ### Creating an Update Script
 

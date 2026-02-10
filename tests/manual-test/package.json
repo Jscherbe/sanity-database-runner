@@ -13,8 +13,8 @@
     "@ulu/sanity-runner": "file:.yalc/@ulu/sanity-runner"
   },
   "devDependencies": {
-    "@sanity/cli": "^4.20.3",
-    "sanity": "^4.20.3",
+    "@sanity/cli": "^5.9.0",
+    "sanity": "^5.9.0",
     "dotenv": "^17.2.3"
   }
 }
