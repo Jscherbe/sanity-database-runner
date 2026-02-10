@@ -44,16 +44,16 @@ export const config = {
   client: createClient({
     projectId: 'your-project-id',
     dataset: 'production', // Should match the dataset above
-    token: process.env.SANITY_WRITE_TOKEN,
+    token: process.env.SANITY_WRITE_TOKEN, 
     apiVersion: '2024-05-01',
     useCdn: false
   })
 };
 ```
 
-#### Path Configuration
+#### Advanced Configuration
 
-By default, the runner will look for scripts in `database/updates` and save backups to `database/backups`. You can override these and other path-related settings using the `paths` object.
+You can override the default paths and other settings.
 
 ```javascript
 // sanity-runner.config.js
@@ -62,6 +62,13 @@ import { createClient } from '@sanity/client';
 export const config = {
   dataset: 'production',
   client: createClient({ /* ... */ }),
+
+  // Optional: A regex to find script files.
+  // Defaults to /\.(js|mjs|cjs)$/
+  extensions: /\.(js|ts)$/,
+
+  // (Optional, default true) Disable backups for a specific run.
+  backup: false,
 
   // The `paths` object is optional.
   paths: {
@@ -82,8 +89,7 @@ export const config = {
     sanityBin: '/path/to/your/sanity' 
   },
   
-  // (Optional) Disable backups for a specific run.
-  // backup: false
+  
 };
 ```
 
@@ -111,10 +117,10 @@ You can run the tool in two ways:
 
 ### 1. Explicit Mode (For Automation)
 
-Provide the name of your script file (without the `.js` extension) as a command-line argument. This is fast and ideal for use in other scripts or CI/CD pipelines.
+Provide the full name of your script file, including the extension, as a command-line argument. This is fast and ideal for use in other scripts or CI/CD pipelines.
 
 ```bash
-npx sanity-runner my-first-update
+npx sanity-runner my-first-update.js
 ```
 
 ### 2. Interactive Mode (For Convenience)

@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.2.0 - Feb 10, 2026
+
+- Fix binary script (to pull update paths from createDatabaseRunner instead of handling it on it's own). So it all comes from one source of truth
+  - Add `getAvailableScripts` method to runners internal API
+- **Make API stricter for script names**
+  - The library requires that a script name is the full filename not the filename without extension
+    - So `npx sanity-runner my-script` becomes `npx sanity-runner my-script.js`
+  - There is a new config option for extensions (regex) that determine what scripts to search for in updated dir
+
 ## 1.1.0 - Feb 10, 2026
 
 - **Fix path issues**
